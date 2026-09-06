@@ -62,7 +62,7 @@ def test_health_endpoint_v1_1_includes_model_metadata(client, monkeypatch):
     response = client.get("/health")
 
     assert response.status_code == 200
-    assert response.get_json()["status"] == "wrong"
+    assert response.get_json()["status"] == "healthy"
     assert response.get_json() == {
         "status": "healthy",
         "application": "student-ml-api",
