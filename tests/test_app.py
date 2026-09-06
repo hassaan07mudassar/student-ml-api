@@ -18,10 +18,11 @@ def test_health_endpoint(client):
 
     assert response.status_code == 200
     assert response.get_json() == {
-        "status": "healthy",
-        "application": "student-ml-api",
-        "version": "1.0.0",
-    }
+    "status": "healthy",
+    "application": "student-ml-api",
+    "application_version": "1.1.0",
+    "model_version": "model-1",
+}
 
 
 def test_successful_prediction(client):
