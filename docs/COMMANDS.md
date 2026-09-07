@@ -1,5 +1,41 @@
 # Execution Commands
 
+## Required demonstration
+
+Run these steps from a clean folder and capture the terminal output for the
+submission evidence.
+
+```powershell
+git clone https://github.com/hassaan07mudassar/student-ml-api.git
+cd student-ml-api
+git log --oneline --decorate --all
+git show --stat --oneline ee593b2
+```
+
+Open the repository Pull Requests page and show PRs `#1` and `#2`. Open the
+Actions page and show the failed CI run, successful CI run, and successful
+release run. Then pull and run the published image:
+
+```powershell
+docker pull ghcr.io/hassaan07mudassar/student-ml-api:1.1.0
+docker run -d --name student-ml-api -p 5000:5000 ghcr.io/hassaan07mudassar/student-ml-api:1.1.0
+curl http://localhost:5000/health
+curl -Method POST -Uri http://localhost:5000/predict -Headers @{"Content-Type"="application/json"} -Body '{"value":10}'
+```
+
+Demonstrate rollback without rebuilding:
+
+```powershell
+docker rm -f student-ml-api
+docker pull ghcr.io/hassaan07mudassar/student-ml-api:1.0.0
+docker run -d --name student-ml-api -p 5000:5000 ghcr.io/hassaan07mudassar/student-ml-api:1.0.0
+curl http://localhost:5000/health
+```
+
+The first health response is the v1.1.0 metadata response. The rollback
+response is the v1.0.0 response, proving that the previous registry artifact
+was restored without a source checkout or Docker rebuild.
+
 ## Git workflow
 
 ```bash
